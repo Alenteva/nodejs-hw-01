@@ -3,9 +3,14 @@ import fs from 'fs/promises';
 import { createFakeContact } from '../utils/createFakeContact.js';
 // додаємо один згенерований контакт
 export const addOneContact = async () => {
+  let contacts = [];
   try {
-    let contacts = [];
-
+    const data = await fs.readFile(PATH_DB, 'utf8');
+    contacts = JSON.parse(data);
+  } catch (err) {
+    console.error('Error:', err);
+  }
+  try {
     const newContact = createFakeContact();
     contacts.push(newContact);
 
